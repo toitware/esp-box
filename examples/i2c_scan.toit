@@ -7,7 +7,7 @@ import i2c
 import gpio
 
 main:
-  device := esp_box.device
+  device := esp_box.Device
 
   device.i2c_bus.scan.do:
     desc := KNOWN_IDS.get it --if_absent=: ""

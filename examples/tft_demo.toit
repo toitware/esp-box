@@ -14,7 +14,7 @@ import pixel_display.true_color show *
 import esp_box
 
 main:
-  device := esp_box.device
+  device := esp_box.Device
 
   // Get TFT driver.
   tft := device.display

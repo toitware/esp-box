@@ -5,17 +5,17 @@
 import esp_box
 
 main:
-  device := esp_box.device
+  device := esp_box.Device
 
   // Get touchpad driver.
   tp := device.touchpad
 
   while true:
-    action := tp.capture
-    if action:
+    event := tp.capture
+    if event:
       /**
       string format:
-          action name(timestamp): action details description
+          event name(timestamp): event details description
       */
-      print "$action"
+      print "$event"
     sleep --ms=10
