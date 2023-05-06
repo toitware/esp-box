@@ -64,17 +64,13 @@ class Event:
       return "Action is not supported"
 
 class Tt21100:
-  static I2C_ADDRESS ::= 0x24
-
-  features/int
+  flags/int
   width/int
   height/int
   ready_pin/gpio.Pin
   device/i2c.Device
 
-  constructor i2c_bus/i2c.Bus .ready_pin/gpio.Pin --frequency/int=400_000 --flags/int=0 --.width/int --.height/int:
-    features = flags
-    device = i2c_bus.device I2C_ADDRESS
+  constructor .device/i2c.Device .ready_pin/gpio.Pin --.flags/int=0 --.width/int --.height/int:
 
   capture -> Event?:
     if ready_pin.get != 0:
@@ -84,11 +80,11 @@ class Tt21100:
     msg_len := LITTLE_ENDIAN.uint16 index 0
     event := Event (device.read msg_len)
     if event.type == TOUCH_PAD and event.x != INVALID_VALUE:
-      if features & TT2100_FLIP_X != 0:
+      if flags & TT2100_FLIP_X != 0:
         event.x = width - event.x
-      if features & TT2100_FLIP_Y != 0:
+      if flags & TT2100_FLIP_Y != 0:
         event.y = height - event.y
-      if features & TT2100_FLIP_XY != 0:
+      if flags & TT2100_FLIP_XY != 0:
         x := event.x
         event.x = event.y
         event.y = x
