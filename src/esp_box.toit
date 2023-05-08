@@ -9,9 +9,9 @@ import pixel_display
 import spi
 import .tt21100
 
-BSP_CONFIG_DEFAULT ::= BspConfig
+BOARD_CONFIG_DEFAULT ::= BoardConfig
 
-class BspConfig:
+class BoardConfig:
   i2c_scl_pin/int ::= ?
   i2c_sda_pin/int ::= ?
   i2c_clock/int ::= ?
@@ -65,11 +65,11 @@ class BspConfig:
               --.touchpad_ready_pin/int=3:
 
 class Device:
-  config/BspConfig
+  config/BoardConfig
   i2c_bus/i2c.Bus
   spi_bus/spi.Bus
 
-  constructor .config/BspConfig=BSP_CONFIG_DEFAULT:
+  constructor .config/BoardConfig=BOARD_CONFIG_DEFAULT:
     i2c_bus = i2c.Bus
         --scl=(gpio.Pin config.i2c_scl_pin)
         --sda=(gpio.Pin config.i2c_sda_pin)
